@@ -12,7 +12,7 @@
   },
   "scripts": {
     "lint": "npx eslint .",
-    "start": "app.js",
+    "start": "node app.js",
     "dev": "nodemon app.js"
   }
 }
