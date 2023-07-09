@@ -16,7 +16,6 @@ module.exports.getUser = (req, res) => {
     })
     .catch((err) => {
       if (err.name === "CastError") return res.status(400).send({ message: "Переданы некорректные данные в метод получения пользователя" });
-      if (err.name === "TypeError") return res.status(404).send({ message: "Пользователь с таким id не найден" });
       return res.status(500).send({ message: err.name });
     });
 };
