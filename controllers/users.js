@@ -17,8 +17,9 @@ module.exports.getUser = (req, res) => {
       _id: user._id,
     }))
     .catch((err) => {
-      if (err.name === "CastError") return res.status(404).send({ message: "Пользователь не найден" });
-      return res.status(500).send({ message: err.message });
+      if (err.name === "CastError") return res.status(400).send({ message: "Переданы некорректные данные в метод получения пользователя" });
+      if (err.name === "TypeError") return res.status(404).send({ message: "Пользователь с таким id не найден" });
+      return res.status(500).send({ message: err.name });
     });
 };
 
@@ -37,7 +38,7 @@ module.exports.updateProfile = (req, res) => {
   const { name, about } = req.body;
 
   if (name || about) {
-    User.findByIdAndUpdate(req.user._id, { name, about }, { new: true })
+    User.findByIdAndUpdate(req.user._id, { name, about }, { new: true, runValidators: true })
       .then((user) => res.send({ data: user }))
       .catch((err) => {
         if (err.name === "ValidationError") return res.status(400).send({ message: "Переданы некорректные данные в метод обновления профиля пользователя" });
@@ -50,7 +51,7 @@ module.exports.updateAvatar = (req, res) => {
   const { avatar } = req.body;
 
   if (avatar) {
-    User.findByIdAndUpdate(req.user._id, { avatar }, { new: true })
+    User.findByIdAndUpdate(req.user._id, { avatar }, { new: true, runValidators: true })
       .then((user) => res.send({ data: user }))
       .catch((err) => {
         if (err.name === "ValidationError") return res.status(400).send({ message: "Переданы некорректные данные в метод обновления аватара пользователя" });
