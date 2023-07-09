@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const cardSchema = new mongoose.Schema(
   {
@@ -20,6 +20,7 @@ const cardSchema = new mongoose.Schema(
     likes: [{
       type: mongoose.Schema.Types.ObjectId,
       default: [],
+      ref: 'user',
     }],
     createdAt: {
       type: Date,

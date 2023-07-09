@@ -1,6 +1,19 @@
 {
+  "name": "express-mesto-gha",
+  "version": "0.1",
+  "description": "Backend for mesto project",
+  "main": "app.js",
+  "homepage": "https://github.com/R0xys/express-mesto-gha",
+  "author": "r0-0ky",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/R0xys/express-mesto-gha"
+  },
+  "bugs": {
+    "url": "https://github.com/R0xys/express-mesto-gha/issues"
+  },
   "dependencies": {
-    "body-parser": "^1.20.2",
     "express": "^4.18.2",
     "mongoose": "^7.3.2"
   },

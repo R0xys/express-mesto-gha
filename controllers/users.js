@@ -1,4 +1,4 @@
-const User = require("../models/user");
+const User = require('../models/user');
 
 module.exports.getUsers = (req, res) => {
   User.find()
@@ -11,11 +11,11 @@ module.exports.getUser = (req, res) => {
 
   User.findById(userId)
     .then((user) => {
-      if (!user) return res.status(404).send({ message: "Пользователь с таким id не найден" });
+      if (!user) return res.status(404).send({ message: 'Пользователь с таким id не найден' });
       return res.send({ user });
     })
     .catch((err) => {
-      if (err.name === "CastError") return res.status(400).send({ message: "Переданы некорректные данные в метод получения пользователя" });
+      if (err.name === 'CastError') return res.status(400).send({ message: 'Переданы некорректные данные в метод получения пользователя' });
       return res.status(500).send({ message: err.name });
     });
 };
@@ -26,7 +26,7 @@ module.exports.createUser = (req, res) => {
   User.create({ name, about, avatar })
     .then((user) => res.send({ user }))
     .catch((err) => {
-      if (err.name === "ValidationError") return res.status(400).send({ message: "Переданы некорректные данные в метод создания пользователя" });
+      if (err.name === 'ValidationError') return res.status(400).send({ message: 'Переданы некорректные данные в метод создания пользователя' });
       return res.status(500).send({ message: err.message });
     });
 };
@@ -34,31 +34,27 @@ module.exports.createUser = (req, res) => {
 module.exports.updateProfile = (req, res) => {
   const { name, about } = req.body;
 
-  if (name || about) {
-    User.findByIdAndUpdate(req.user._id, { name, about }, { new: true, runValidators: true })
-      .then((user) => {
-        if (!user) return res.status(404).send({ message: "Пользователь с таким id не найден" });
-        return res.send({ user });
-      })
-      .catch((err) => {
-        if (err.name === "ValidationError") return res.status(400).send({ message: "Переданы некорректные данные в метод обновления профиля пользователя" });
-        return res.status(500).send({ message: err.message });
-      });
-  } else res.status(400).send({ message: "Переданы некорректные данные в метод обновления профиля пользователя" });
+  User.findByIdAndUpdate(req.user._id, { name, about }, { new: true, runValidators: true })
+    .then((user) => {
+      if (!user) return res.status(404).send({ message: 'Пользователь с таким id не найден' });
+      return res.send({ user });
+    })
+    .catch((err) => {
+      if (err.name === 'ValidationError') return res.status(400).send({ message: 'Переданы некорректные данные в метод обновления профиля пользователя' });
+      return res.status(500).send({ message: err.message });
+    });
 };
 
 module.exports.updateAvatar = (req, res) => {
   const { avatar } = req.body;
 
-  if (avatar) {
-    User.findByIdAndUpdate(req.user._id, { avatar }, { new: true, runValidators: true })
-      .then((user) => {
-        if (!user) return res.status(404).send({ message: "Пользователь с таким id не найден" });
-        return res.send({ user });
-      })
-      .catch((err) => {
-        if (err.name === "ValidationError") return res.status(400).send({ message: "Переданы некорректные данные в метод обновления аватара пользователя" });
-        return res.status(500).send({ message: err.message });
-      });
-  } else res.status(400).send({ message: "Переданы некорректные данные в метод обновления аватара пользователя" });
+  User.findByIdAndUpdate(req.user._id, { avatar }, { new: true, runValidators: true })
+    .then((user) => {
+      if (!user) return res.status(404).send({ message: 'Пользователь с таким id не найден' });
+      return res.send({ user });
+    })
+    .catch((err) => {
+      if (err.name === 'ValidationError') return res.status(400).send({ message: 'Переданы некорректные данные в метод обновления аватара пользователя' });
+      return res.status(500).send({ message: err.message });
+    });
 };
