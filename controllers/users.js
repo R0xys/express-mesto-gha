@@ -10,7 +10,10 @@ module.exports.getUser = (req, res) => {
   const { userId } = req.params;
 
   User.findById(userId)
-    .then((user) => res.send({ user }))
+    .then((user) => {
+      if (!user) return res.status(404).send({ message: "Пользователь с таким id не найден" });
+      return res.send({ user });
+    })
     .catch((err) => {
       if (err.name === "CastError") return res.status(400).send({ message: "Переданы некорректные данные в метод получения пользователя" });
       if (err.name === "TypeError") return res.status(404).send({ message: "Пользователь с таким id не найден" });
