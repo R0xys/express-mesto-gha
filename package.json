@@ -1,6 +1,6 @@
 {
   "name": "express-mesto-gha",
-  "version": "0.1",
+  "version": "0.0.1",
   "description": "Backend for mesto project",
   "main": "app.js",
   "homepage": "https://github.com/R0xys/express-mesto-gha",
