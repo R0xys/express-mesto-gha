@@ -14,14 +14,20 @@
     "url": "https://github.com/R0xys/express-mesto-gha/issues"
   },
   "dependencies": {
-    "express": "^4.18.2",
-    "mongoose": "^7.3.2"
+    "bcryptjs": "2.4.3",
+    "celebrate": "^15.0.1",
+    "cookie-parser": "1.4.6",
+    "dotenv": "16.3.1",
+    "express": "4.18.2",
+    "jsonwebtoken": "9.0.1",
+    "mongoose": "7.3.2",
+    "validator": "13.9.0"
   },
   "devDependencies": {
-    "eslint": "^8.44.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.27.5",
-    "nodemon": "^2.0.22"
+    "eslint": "8.44.0",
+    "eslint-config-airbnb-base": "15.0.0",
+    "eslint-plugin-import": "2.27.5",
+    "nodemon": "2.0.22"
   },
   "scripts": {
     "lint": "npx eslint .",
