@@ -43,7 +43,12 @@ module.exports.createUser = (req, res, next) => {
       email,
       password: hash,
     }))
-    .then((user) => res.send({ user }))
+    .then((user) => res.send({
+      name: user.name,
+      about: user.about,
+      avatar: user.avatar,
+      email: user.email,
+    }))
     .catch((err) => {
       if (err.code === 11000) next(new ConflictError('Пользователь с таким email уже существует'));
       if (err.name === 'ValidationError') next(new BadRequestError('Переданы некорректные данные в метод создания пользователя'));
@@ -80,8 +85,7 @@ module.exports.updateAvatar = (req, res, next) => {
 };
 
 module.exports.getUserInfo = (req, res, next) => {
-  const { userId } = req.user;
-
+  const userId = req.user._id;
   User.findById(userId)
     .then((user) => {
       if (!user) throw new NotFoundError('Пользователь с таким id не найден');
