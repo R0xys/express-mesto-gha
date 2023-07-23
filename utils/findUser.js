@@ -20,7 +20,7 @@ function getUserByIdDecorator(func) {
     else next(err);
   }
   return (req, res, next) => {
-    const userId = req.params;
+    const { userId } = req.params;
     func(userId, res, errHandle, next);
   };
 }
