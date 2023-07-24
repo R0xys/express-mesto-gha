@@ -3,10 +3,12 @@ const Card = require('../models/card');
 const NotFoundError = require('../errors/notFoundError');
 const BadRequestError = require('../errors/badRequestError');
 const ForbiddenError = require('../errors/forbiddenError');
+const { putLike, deleteLike } = require('../utils/updateCard');
 
 module.exports.getCards = (req, res, next) => {
   Card.find({})
     .populate('owner')
+    .populate('likes')
     .then((cards) => res.send(cards))
     .catch(next);
 };
@@ -42,35 +44,9 @@ module.exports.deleteCard = (req, res, next) => {
 };
 
 module.exports.putLike = (req, res, next) => {
-  const { cardId } = req.params;
-
-  Card.findByIdAndUpdate(
-    cardId,
-    { $addToSet: { likes: req.user._id } },
-  )
-    .then((card) => {
-      if (!card) throw new NotFoundError('Карточка с таким id не найдена');
-      return res.send({ card });
-    })
-    .catch((err) => {
-      if (err instanceof mongoose.Error.CastError) next(new BadRequestError('Переданы некорректные данные в метод доабвления лайка карточки'));
-      else next(err);
-    });
+  putLike(req, res, next);
 };
 
 module.exports.deleteLike = (req, res, next) => {
-  const { cardId } = req.params;
-
-  Card.findByIdAndUpdate(
-    cardId,
-    { $pull: { likes: req.user._id } },
-  )
-    .then((card) => {
-      if (!card) throw new NotFoundError('Карточка с таким id не найдена');
-      return res.send({ card });
-    })
-    .catch((err) => {
-      if (err instanceof mongoose.Error.CastError) next(new BadRequestError('Переданы некорректные данные в метод удаления лайка карточки'));
-      else next(err);
-    });
+  deleteLike(req, res, next);
 };
